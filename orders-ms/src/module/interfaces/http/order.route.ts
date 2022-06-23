@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import OrderApplication from "../../application/order.application";
-import OrderInfraestructure from "../../infraestructure/models/order.infraestructure";
+import OrderInfraestructure from "../../infraestructure/order.infraestructure";
 import OrderController from "./order.controller";
 
 const infraestructure = new OrderInfraestructure();

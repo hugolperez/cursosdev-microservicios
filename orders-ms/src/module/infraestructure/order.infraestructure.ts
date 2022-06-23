@@ -1,6 +1,6 @@
-import { OrderEntity, STATUS } from "../../domain/models/entities/order.entity";
-import Repository from "../../domain/repositories/order.repository";
-import Model from "./order.model";
+import { OrderEntity, STATUS } from "../domain/models/entities/order.entity";
+import Repository from "../domain/repositories/order.repository";
+import Model from "./models/order.model";
 
 export default class OrderInfraestructure implements Repository {
   async insert(order: OrderEntity): Promise<OrderEntity> {
