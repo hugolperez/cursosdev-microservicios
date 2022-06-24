@@ -1,18 +1,27 @@
 import { OrderEntity, STATUS } from "../domain/models/entities/order.entity";
+import RepositoryBroker from "../domain/repositories/order-broker.repository";
 import Repository from "../domain/repositories/order.repository";
 
 export default class OrderApplication {
-  private repository: Repository;
+  private repositoryOrder: Repository;
+  private repositoryBroker: RepositoryBroker;
 
-  constructor(repository: Repository) {
-    this.repository = repository;
+  constructor(repository: Repository, repositoryBroker: RepositoryBroker) {
+    this.repositoryOrder = repository;
+    this.repositoryBroker = repositoryBroker;
   }
 
   async create(order: OrderEntity): Promise<OrderEntity> {
-    return this.repository.insert(order);
+    const result = await this.repositoryOrder.insert(order);
+    this.repositoryBroker.send({
+      type: "ORDER_CREATED_EVENT",
+      data: result,
+    });
+
+    return result;
   }
 
   async update(transaction: string, status: STATUS): Promise<string> {
-    return this.repository.update(transaction, status);
+    return this.repositoryOrder.update(transaction, status);
   }
 }
